@@ -38,7 +38,6 @@ void print_result(int value)
 int getIndex(FILE *fp){
   int index;
   char s[4];
-  fgetc(fp);					// get rid of =
   fscanf(fp, "%[^=]s", s);
   index = atoi(s);
   fgetc(fp);					// get rid of =
@@ -51,7 +50,7 @@ int main(){
  char filename2[20] = "ex33_2.txt";
  char filename3[20] = "ans33.txt";
  FILE *fp1, *fp2, *fp3;
- char stringData[601];                          // buffer
+ char stringData[2000] = "";                          // buffer
  int index_1, index_2 = 0;				// store the =#= of each file. -1 when 
  char cFrom1, cFrom2 = ' ';
  int printFrom1 = 0;				// bool to check which file to print
@@ -69,13 +68,26 @@ int main(){
 
 
 
+ cFrom1 = getc(fp1);				// get rid of =
+ cFrom2 = getc(fp2);				// get rid of =
  index_1 = getIndex(fp1);
  index_2 = getIndex(fp2);
-
- if(index_1 < index_2){
-   printFrom1 = 1;
-   fscanf(fp1, "%[^=]s", stringData);		// get line between =#=
-   printf("%s", stringData);
+ 
+ while(cFrom1 != EOF && cFrom2 != EOF){	
+   // compare two index
+   if(index_1 < index_2){
+     printFrom1 = 1;
+     if(fscanf(fp1, "%[^=]s", stringData))     // get line between =#=
+       printf("%s", stringData);
+     getc(fp1);					// get rid of =
+     index_1 = getIndex(fp1);     
+   }else if(index_2 < index_1){
+     printFrom1 = 0;
+     if(fscanf(fp2, "%[^=]s", stringData))
+       printf("%s", stringData);
+     getc(fp2);
+     index_2 = getIndex(fp2);
+   }
  }
 
  // close the files
