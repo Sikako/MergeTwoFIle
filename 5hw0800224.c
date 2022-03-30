@@ -19,28 +19,28 @@ int main(){
  char filename2[20] = "ex33_2.txt";
  char filename3[20] = "ans33.txt";
  FILE *fp1, *fp2, *fp3;
- char line[1024];
- int retval = 0;
- char address[256];
- regex_t re;
- 
- 
+ char stringData[601];                          // buffer
+ int index_1, index_2;				// store the =#= of each file
+ char cFrom1, cFrom2;
+ int printFrom1 = 0;				// bool to check which file to print
+ int end1, end2 = 0				// bool to check if file is end
+
+
  // open the files
  fp1 = processFile(filename1, "r");
  fp2 = processFile(filename2, "r");
  fp3 = processFile(filename3, "w");
  
- 
- if(regcomp(&re, toFind, REG_EXTENDED) != 0){
-    fprintf(stderr, "Failed to compile regex '%s'\n", toFind);
-    return -1;
- }
+// fscanf(fp1, "%s", stringData);
+// fprintf(fp3, "%s", stringData);
 
- while((fgets(line, 1024, fp1)) != NULL){
-  line[strlen(line)-1] = '\0';
-  if((retval = regexec(&re, line, 0, NULL, 0)) == 0)
-	  printf("%s\n", line);
- }
+while (1) {
+  cFrom1 = fgetc(fp1);
+
+  if(c== '=') putchar(c);   
+} 
+
+
 
 
 
